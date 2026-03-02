@@ -26,4 +26,5 @@ demo.launch(allowed_paths=viewer.allowed_paths)
 
 - [ ] The app does not stop with `ctrl+c`
 - [ ] Possible to skip the file saving (`static_viewer.html` and `scene.vtksz`) in tmp dir ?
-- [ ] Import `static_viewer.html` directly from `trame` ? 
+- [ ] Import `static_viewer.html` directly from `trame` ?
+- [ ] Possiblt to update plotter once passed to `PyvistaPlotter` ?
