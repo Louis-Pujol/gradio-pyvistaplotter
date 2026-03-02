@@ -22,5 +22,6 @@
       }
     }
   },
-  "remoteUser": "root"
+  "remoteUser": "root",
+  "postStartCommand": "pip install -e gradio_pyvistaplotter[dev]"
 }
