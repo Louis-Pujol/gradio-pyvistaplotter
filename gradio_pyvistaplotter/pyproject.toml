@@ -7,25 +7,16 @@ requires = [
 build-backend = "hatchling.build"
 
 [project]
-name = "gradio_pyvistaviewer"
+name = "pyvistaplotter_component"
 version = "0.0.1"
-description = "pyvista viewer for gradio"
+description = "pyvista viewer"
 readme = "README.md"
 license = "apache-2.0"
 requires-python = ">=3.10"
 authors = [{ name = "YOUR NAME", email = "YOUREMAIL@domain.com" }]
-keywords = ["gradio-custom-component", "gradio-template-SimpleTextbox"]
+keywords = ["gradio-custom-component", "gradio-template-HTML"]
 # Add dependencies here
-dependencies = [
-  "gradio>=6.0,<7.0",
-  "pyvista",
-  "trame",
-  "trame-vtk",
-  "trame-vuetify",
-  "jupyterlab",
-  "ipython",
-  "nest_asyncio2",
-]
+dependencies = ["gradio>=6.0,<7.0", "pyvista[jupyter]"]
 classifiers = [
   'Development Status :: 3 - Alpha',
   'Operating System :: OS Independent',
@@ -54,7 +45,7 @@ classifiers = [
 dev = ["build", "twine"]
 
 [tool.hatch.build]
-artifacts = ["/backend/gradio_pyvistaviewer/templates", "*.pyi"]
+artifacts = ["/backend/gradio_pyvistaplotter/templates", "*.pyi"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["/backend/gradio_pyvistaviewer"]
+packages = ["/backend/gradio_pyvistaplotter"]

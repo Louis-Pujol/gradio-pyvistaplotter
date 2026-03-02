@@ -1,13 +1,25 @@
 {
-  "name": "gradio_pyvistaviewer",
-  "version": "0.3.36",
+  "name": "gradio_mycomponent",
+  "version": "0.11.0",
   "description": "Gradio UI packages",
   "type": "module",
   "author": "",
   "license": "ISC",
   "private": false,
   "main_changeset": true,
+  "dependencies": {
+    "@gradio/atoms": "0.22.1",
+    "@gradio/client": "2.1.0",
+    "@gradio/icons": "0.15.1",
+    "@gradio/statustracker": "0.12.4",
+    "@gradio/utils": "0.11.3",
+    "handlebars": "^4.7.8"
+  },
+  "devDependencies": {
+    "@gradio/preview": "0.15.2"
+  },
   "exports": {
+    "./package.json": "./package.json",
     ".": {
       "gradio": "./Index.svelte",
       "svelte": "./dist/Index.svelte",
@@ -18,16 +30,11 @@
       "svelte": "./dist/Example.svelte",
       "types": "./dist/Example.svelte.d.ts"
     },
-    "./package.json": "./package.json"
-  },
-  "dependencies": {
-    "@gradio/atoms": "0.22.0",
-    "@gradio/icons": "0.15.1",
-    "@gradio/statustracker": "0.12.4",
-    "@gradio/utils": "0.11.3"
-  },
-  "devDependencies": {
-    "@gradio/preview": "0.15.2"
+    "./base": {
+      "gradio": "./shared/HTML.svelte",
+      "svelte": "./dist/shared/HTML.svelte",
+      "types": "./dist/shared/HTML.svelte.d.ts"
+    }
   },
   "peerDependencies": {
     "svelte": "^5.48.0"
@@ -35,6 +42,6 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gradio-app/gradio.git",
-    "directory": "js/simpletextbox"
+    "directory": "js/html"
   }
 }
