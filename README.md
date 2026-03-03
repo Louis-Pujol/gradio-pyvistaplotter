@@ -2,6 +2,17 @@
 
 This repository contains a `gradio` component containing a `PyVista` plotter.
 
+## Installation
+
+Clone the repository and run 
+```bash
+pip install gradio_pyvistaplotter/
+```
+
+## Example
+
+There is a minimal gradio app with an interactive plotter:
+
 ```python
 import pyvista as pv
 import gradio as gr
@@ -20,6 +31,8 @@ with gr.Blocks() as demo:
 # Specifying allowed path is necessary
 demo.launch(allowed_paths=viewer.allowed_paths)
 ```
+
+An example app with a mesh loader can be found in `gradio_pyvistaplotter/demo/app.py`
 
 
 ## Issues/TODO
