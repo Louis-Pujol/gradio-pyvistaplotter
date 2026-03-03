@@ -37,7 +37,7 @@ class PyvistaPlotter(gr.HTML):
 
 
         # Copy the static viewer HTML into tmp dir
-        viewer_html = Path(__file__).parent / "templates" / "static_viewer.html"
+        viewer_html = Path(__file__).parent / "static" / "static_viewer.html"
         self.viewer_path = self.tmp_dir / viewer_html.name
         if viewer_html.resolve() != self.viewer_path.resolve():
             shutil.copy(viewer_html, self.viewer_path)

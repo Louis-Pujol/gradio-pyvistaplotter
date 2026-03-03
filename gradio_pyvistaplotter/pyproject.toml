@@ -45,7 +45,7 @@ classifiers = [
 dev = ["build", "twine"]
 
 [tool.hatch.build]
-artifacts = ["/backend/gradio_pyvistaplotter/templates", "*.pyi"]
+artifacts = ["/backend/gradio_pyvistaplotter/static", "*.pyi"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["/backend/gradio_pyvistaplotter"]
