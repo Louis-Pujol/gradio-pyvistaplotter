@@ -8,9 +8,9 @@ from pathlib import Path
 from urllib.parse import quote
 from typing import Any, Callable
 
+from uuid import uuid4
 import gradio as gr
 import pyvista as pv
-import tempfile
 
 pv.OFF_SCREEN = True  # keep your existing headless setup
 
@@ -77,8 +77,10 @@ class PyvistaPlotter(gr.HTML):
             )
 
         # Export into a unique file to avoid collisions across sessions/calls
-        vtksz_path = self.tmp_dir / "scene.vtksz"
+        unique_id = str(uuid4())
+        vtksz_path = self.tmp_dir / f"scene_{unique_id}.vtksz"
         value.export_vtksz(vtksz_path)
+        print(vtksz_path)
         value.close()
         
         return self._build_iframe(vtksz_path)
@@ -89,3 +91,4 @@ class PyvistaPlotter(gr.HTML):
         Convenience: pass this to demo.launch(allowed_paths=viewer.allowed_paths).
         """
         return [str(self.tmp_dir)]
+    
