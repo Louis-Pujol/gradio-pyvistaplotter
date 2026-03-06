@@ -4,8 +4,9 @@ from __future__ import annotations
 import gradio as gr
 import pyvista as pv
 
-from gradio_pyvistaplotter import PyvistaPlotter
+from gradio_pyvistaplotter import PyvistaPlotter, launch
 
+import signal
 
 pl = pv.Plotter()
 pl.add_mesh(pv.Sphere())
@@ -30,7 +31,6 @@ with gr.Blocks() as demo:
         outputs=viewer,
     )
 
-demo.launch(
-    allowed_paths=viewer.allowed_paths, # Important to have access to scene and viewer files 
-    show_error=True,
-)
+
+
+launch(demo, server_name='0.0.0.0')

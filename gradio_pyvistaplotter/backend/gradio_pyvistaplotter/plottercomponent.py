@@ -80,7 +80,6 @@ class PyvistaPlotter(gr.HTML):
         unique_id = str(uuid4())
         vtksz_path = self.tmp_dir / f"scene_{unique_id}.vtksz"
         value.export_vtksz(vtksz_path)
-        print(vtksz_path)
         value.close()
         
         return self._build_iframe(vtksz_path)
