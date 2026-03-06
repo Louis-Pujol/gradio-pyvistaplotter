@@ -37,7 +37,7 @@ An example app with a mesh loader can be found in `gradio_pyvistaplotter/demo/ap
 
 ## Issues/TODO
 
-- [ ] The app does not stop with `ctrl+c`
+- [ ] The app does not stop with `ctrl+c` (only on linux)
 - [ ] Possible to skip the file saving (`static_viewer.html` and `scene.vtksz`) in tmp dir ?
 - [ ] Import `static_viewer.html` directly from `trame` ?
-- [ ] Possiblt to update plotter once passed to `PyvistaPlotter` ?
+- [ ] Possible to update plotter once passed to `PyvistaPlotter` ?
