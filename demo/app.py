@@ -1,5 +1,6 @@
 # app.py
 from __future__ import annotations
+
 import gradio as gr
 import pyvista as pv
 from gradio_pyvistaplotter import PyvistaPlotter, launch
@@ -8,10 +9,12 @@ DEFAULT_CODE = """from pyvista import examples
 pl.add_mesh(examples.load_ant(), show_edges=True, color="mistyrose")
 """
 
+
 def run_plot_code(code: str):
     pl = pv.Plotter()
     exec(code, {"pl": pl, "pv": pv})
     return pl
+
 
 with gr.Blocks() as demo:
     gr.Markdown("# PyvistaComponent: interactive 3D viewer in gradio")
@@ -30,7 +33,7 @@ with gr.Blocks() as demo:
             )
             button = gr.Button("Plot")
             gr.Markdown("""
-        
+
         **Examples:**
         ```python
         # A simple sphere

@@ -4,7 +4,7 @@ This repository contains a `gradio` component containing a `PyVista` plotter.
 
 ## Installation
 
-Clone the repository and run 
+Clone the repository and run
 ```bash
 pip install gradio_pyvistaplotter/
 ```

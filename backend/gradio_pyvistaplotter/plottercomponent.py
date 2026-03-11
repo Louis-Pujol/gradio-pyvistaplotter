@@ -4,15 +4,17 @@ from __future__ import annotations
 import atexit
 import shutil
 import tempfile
+from collections.abc import Callable
 from pathlib import Path
+from typing import Any
 from urllib.parse import quote
-from typing import Any, Callable
-
 from uuid import uuid4
+
 import gradio as gr
 import pyvista as pv
 
 pv.OFF_SCREEN = True  # keep your existing headless setup
+
 
 class PyvistaPlotter(gr.HTML):
     """
@@ -30,11 +32,14 @@ class PyvistaPlotter(gr.HTML):
         self.height_px = int(height_px)
 
         # Create / manage a temp dir for assets
-            
-        self._tmp_dir_obj = tempfile.TemporaryDirectory(prefix="gradio_pyvista_")
-        atexit.register(self._tmp_dir_obj.cleanup) # Clean the tmp dir at program exit
-        self.tmp_dir = Path(self._tmp_dir_obj.name)
 
+        self._tmp_dir_obj = tempfile.TemporaryDirectory(
+            prefix="gradio_pyvista_"
+        )
+        atexit.register(
+            self._tmp_dir_obj.cleanup
+        )  # Clean the tmp dir at program exit
+        self.tmp_dir = Path(self._tmp_dir_obj.name)
 
         # Copy the static viewer HTML into tmp dir
         viewer_html = Path(__file__).parent / "static" / "static_viewer.html"
@@ -71,17 +76,18 @@ class PyvistaPlotter(gr.HTML):
             return None
 
         if not isinstance(value, pv.Plotter):
-            raise TypeError(
+            msg = (
                 f"PyvistaPlotter expects a pyvista.Plotter, got {type(value)!r}. "
                 "Return a pv.Plotter from your fn when using this as an output."
             )
+            raise TypeError(msg)
 
         # Export into a unique file to avoid collisions across sessions/calls
         unique_id = str(uuid4())
         vtksz_path = self.tmp_dir / f"scene_{unique_id}.vtksz"
         value.export_vtksz(vtksz_path)
         value.close()
-        
+
         return self._build_iframe(vtksz_path)
 
     @property
@@ -90,4 +96,3 @@ class PyvistaPlotter(gr.HTML):
         Convenience: pass this to demo.launch(allowed_paths=viewer.allowed_paths).
         """
         return [str(self.tmp_dir)]
-    

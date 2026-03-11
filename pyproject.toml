@@ -7,13 +7,13 @@ requires = [
 build-backend = "hatchling.build"
 
 [project]
-name = "pyvistaplotter_component"
-version = "0.0.1"
-description = "pyvista viewer"
+name = "gradio-pyvistaplotter"
+dynamic = ["version"]
+description = "Gradio PyVista Viewer"
 readme = "README.md"
-license = "apache-2.0"
+license = "MIT"
 requires-python = ">=3.10"
-authors = [{ name = "YOUR NAME", email = "YOUREMAIL@domain.com" }]
+authors = [{ name = "Louis Pujol"}]
 keywords = ["gradio-custom-component", "gradio-template-HTML"]
 # Add dependencies here
 dependencies = ["gradio>=6.0,<7.0", "pyvista[jupyter]"]
@@ -22,30 +22,63 @@ classifiers = [
   'Operating System :: OS Independent',
   'Programming Language :: Python :: 3',
   'Programming Language :: Python :: 3 :: Only',
-  'Programming Language :: Python :: 3.8',
-  'Programming Language :: Python :: 3.9',
   'Programming Language :: Python :: 3.10',
   'Programming Language :: Python :: 3.11',
+  'Programming Language :: Python :: 3.12',
+  'Programming Language :: Python :: 3.13',
   'Topic :: Scientific/Engineering',
   'Topic :: Scientific/Engineering :: Artificial Intelligence',
   'Topic :: Scientific/Engineering :: Visualization',
 ]
 
-# The repository and space URLs are optional, but recommended.
-# Adding a repository URL will create a badge in the auto-generated README that links to the repository.
-# Adding a space URL will create a badge in the auto-generated README that links to the space.
-# This will make it easy for people to find your deployed demo or source code when they
-# encounter your project in the wild.
-
-# [project.urls]
-# repository = "your github repository"
-# space = "your space url"
 
 [project.optional-dependencies]
-dev = ["build", "twine"]
+dev = ["pre-commit", "build", "twine"]
+
+[project.urls]
+repository = "https://github.com/Louis-Pujol/gradio-pyvistaplotter"
+space = "https://huggingface.co/spaces/Louis-Pujol/gradio-pyvistaplotter"
 
 [tool.hatch.build]
-artifacts = ["/backend/gradio_pyvistaplotter/static", "*.pyi"]
+artifacts = ["backend/gradio_pyvistaplotter/static", "*.pyi"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["/backend/gradio_pyvistaplotter"]
+packages = ["backend/gradio_pyvistaplotter"]
+
+[tool.hatch.version]
+path = "backend/gradio_pyvistaplotter/__init__.py"
+
+# See: https://learn.scientific-python.org/development/guides/style/#PC190
+[tool.ruff]
+line-length = 79
+
+[tool.ruff.lint]
+extend-select = [
+	"B",        # flake8-bugbear
+	"I",        # isort
+	"ARG",      # flake8-unused-arguments
+	"C4",       # flake8-comprehensions
+	"EM",       # flake8-errmsg
+	"ICN",      # flake8-import-conventions
+	"G",        # flake8-logging-format
+	"PGH",      # pygrep-hooks
+	"PIE",      # flake8-pie
+	"PL",       # pylint
+	"PT",       # flake8-pytest-style
+	"PTH",      # flake8-use-pathlib
+	"RET",      # flake8-return
+	"RUF",      # Ruff-specific
+	"SIM",      # flake8-simplify
+	"T20",      # flake8-print
+	"UP",       # pyupgrade
+	"YTT",      # flake8-2020
+	"EXE",      # flake8-executable
+	"NPY",      # NumPy specific rules
+	"FURB",     # refurb
+	"PYI",      # flake8-pyi
+]
+
+
+[tool.ruff.format]
+indent-style = "space"
+docstring-code-format = true
