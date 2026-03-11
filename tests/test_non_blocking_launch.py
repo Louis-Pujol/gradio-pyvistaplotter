@@ -24,6 +24,9 @@ def test_custom_launch_calls_demo_launch(plotter):
     We mock demo.launch() and signal.pause() so the function returns immediately
     without blocking or touching signal handlers in a way that would interfere
     with pytest.
+
+    signal.pause does not exist on Windows, so we use patch.object with
+    create=True to allow patching a non-existent attribute on the signal module.
     """
     with gr.Blocks() as demo:
         PyvistaPlotter(value=plotter)
@@ -33,7 +36,9 @@ def test_custom_launch_calls_demo_launch(plotter):
     with (
         patch.object(demo, "launch") as mock_launch,
         patch("signal.signal"),
-        patch("signal.pause", side_effect=KeyboardInterrupt),
+        patch.object(
+            signal, "pause", create=True, side_effect=KeyboardInterrupt
+        ),
         patch("sys.exit"),
     ):
         launch(demo, server_port=port)
@@ -47,8 +52,11 @@ def test_custom_launch_calls_demo_launch(plotter):
 def test_custom_launch_handles_keyboard_interrupt_on_linux(plotter):
     """launch() catches KeyboardInterrupt from signal.pause() and calls sys.exit(0).
 
-    Covers the signal.pause() branch on Linux/macOS, where the
-    blocking call raises KeyboardInterrupt when SIGINT is received.
+    Covers the signal.pause() branch on Linux/macOS, where the blocking call
+    raises KeyboardInterrupt when SIGINT is received.
+
+    signal.pause does not exist on Windows, so we use patch.object with
+    create=True to allow patching a non-existent attribute on the signal module.
     """
     with gr.Blocks() as demo:
         PyvistaPlotter(value=plotter)
@@ -56,7 +64,9 @@ def test_custom_launch_handles_keyboard_interrupt_on_linux(plotter):
     with (
         patch.object(demo, "launch"),
         patch("signal.signal"),
-        patch("signal.pause", side_effect=KeyboardInterrupt),
+        patch.object(
+            signal, "pause", create=True, side_effect=KeyboardInterrupt
+        ),
         patch("sys.exit") as mock_exit,
     ):
         launch(demo)
@@ -69,8 +79,8 @@ def test_custom_launch_handles_keyboard_interrupt_on_windows(
 ):
     """launch() catches KeyboardInterrupt from the Windows polling loop and calls sys.exit(0).
 
-    Covers the Windows fallback branch by temporarily hiding
-    signal.pause so the code falls back to the time.sleep() polling loop.
+    Covers the Windows fallback branch by temporarily hiding signal.pause so
+    the code falls back to the time.sleep() polling loop.
     """
     with gr.Blocks() as demo:
         PyvistaPlotter(value=plotter)
