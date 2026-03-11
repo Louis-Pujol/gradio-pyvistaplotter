@@ -33,7 +33,14 @@ classifiers = [
 
 
 [project.optional-dependencies]
-dev = ["pre-commit", "build", "twine"]
+dev = [
+  "pre-commit",
+  "build",
+  "twine",
+  "pytest",
+  "pytest-cov",
+  "pyvista[offscreen]",  # includes offscreen rendering support (osmesa or egl)
+]
 
 [project.urls]
 repository = "https://github.com/Louis-Pujol/gradio-pyvistaplotter"
@@ -47,6 +54,24 @@ packages = ["backend/gradio_pyvistaplotter"]
 
 [tool.hatch.version]
 path = "backend/gradio_pyvistaplotter/__init__.py"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = [
+		"-ra",
+		"--durations=10",
+		"--showlocals",
+		"--strict-markers",
+		"--strict-config",
+		"--doctest-modules",
+		"--cov=backend/gradio_pyvistaplotter",
+		"--cov-report=term-missing",
+		"--cov-report=html",
+		"--cov-report=xml"
+		]
+
+testpaths = ["tests"]
+
 
 # See: https://learn.scientific-python.org/development/guides/style/#PC190
 [tool.ruff]
