@@ -3,8 +3,6 @@ import signal
 import sys
 import time
 
-from .plottercomponent import PyvistaPlotter
-
 
 def launch(demo, **kwargs):
     """Launch a Gradio demo with reliable Ctrl+C support on all platforms.
@@ -28,12 +26,17 @@ def launch(demo, **kwargs):
     Example:
         Instead of the standard::
 
-            demo.launch(allowed_paths=viewer.allowed_paths, server_name="0.0.0.0")
+            demo.launch(
+                allowed_paths=viewer.allowed_paths, server_name="0.0.0.0"
+            )
 
         Use::
 
             from gradio_pyvistaplotter import launch
-            launch(demo, allowed_paths=viewer.allowed_paths, server_name="0.0.0.0")
+
+            launch(
+                demo, allowed_paths=viewer.allowed_paths, server_name="0.0.0.0"
+            )
 
     Note:
         This workaround is necessary because Gradio's built-in signal handling
@@ -43,24 +46,15 @@ def launch(demo, **kwargs):
         https://github.com/gradio-app/gradio/issues/7051
     """
 
-    plotter_paths = []
-    for block in demo.blocks.values():
-        if isinstance(block, PyvistaPlotter):
-            plotter_paths.extend(block.allowed_paths or [])
-    
-    # Merge with any user-provided allowed_paths
-    user_paths = kwargs.get("allowed_paths", [])
-    kwargs["allowed_paths"] = list(set(user_paths + plotter_paths))
     kwargs["prevent_thread_lock"] = True
-
     demo.launch(**kwargs)
 
     try:
         if hasattr(signal, "pause"):
-            signal.pause()   # Linux/macOS: blocks until any signal is received
+            signal.pause()  # Linux/macOS: blocks until any signal is received
         else:
             while True:
                 time.sleep(1)  # Windows: no signal.pause(), poll instead
     except KeyboardInterrupt:
-        print("\nShutting down...", flush=True)
+        print("\nShutting down...", flush=True)  # noqa: T201
         sys.exit(0)
