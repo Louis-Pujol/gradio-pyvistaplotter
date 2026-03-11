@@ -4,10 +4,8 @@ A [Gradio](https://www.gradio.app/) custom component that embeds an interactive 
 
 ## Installation
 
-Clone the repository, then install the package:
-
 ```bash
-pip install gradio_pyvistaplotter/
+pip install gradio-pyvistaplotter
 ```
 
 ## Quick Start
