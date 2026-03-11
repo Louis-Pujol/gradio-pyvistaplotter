@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import atexit
+import os
 import shutil
 import tempfile
 from collections.abc import Callable
@@ -33,13 +34,22 @@ class PyvistaPlotter(gr.HTML):
 
         # Create / manage a temp dir for assets
 
-        self._tmp_dir_obj = tempfile.TemporaryDirectory(
-            prefix="gradio_pyvista_"
-        )
-        atexit.register(
-            self._tmp_dir_obj.cleanup
-        )  # Clean the tmp dir at program exit
-        self.tmp_dir = Path(self._tmp_dir_obj.name)
+        if os.getenv("GRADIO_TEMP_DIR") is not None:
+            self.tmp_dir = Path(os.getenv("GRADIO_TEMP_DIR"))
+        else:
+            self._tmp_dir_obj = tempfile.TemporaryDirectory(
+                prefix="gradio_pyvista_"
+            )
+            atexit.register(
+                self._tmp_dir_obj.cleanup
+            )  # Clean the tmp dir at program exit
+            self.tmp_dir = Path(self._tmp_dir_obj.name)
+
+        allowed = os.getenv("GRADIO_ALLOWED_PATHS", "")
+        if str(self.tmp_dir.resolve()) not in allowed:
+            os.environ["GRADIO_ALLOWED_PATHS"] = str(
+                self.tmp_dir.resolve()
+            ) + ("," + allowed if allowed else "")
 
         # Copy the static viewer HTML into tmp dir
         viewer_html = Path(__file__).parent / "static" / "static_viewer.html"
@@ -82,7 +92,8 @@ class PyvistaPlotter(gr.HTML):
             )
             raise TypeError(msg)
 
-        # Export into a unique file to avoid collisions across sessions/calls
+        # Export into a unique file to avoid collisions across sessions/
+        # if we reuse the same name, the plotter is not updated when a new plotter is passed
         unique_id = str(uuid4())
         vtksz_path = self.tmp_dir / f"scene_{unique_id}.vtksz"
         value.export_vtksz(vtksz_path)

@@ -3,8 +3,6 @@ import signal
 import sys
 import time
 
-from .plottercomponent import PyvistaPlotter
-
 
 def launch(demo, **kwargs):
     """Launch a Gradio demo with reliable Ctrl+C support on all platforms.
@@ -48,16 +46,7 @@ def launch(demo, **kwargs):
         https://github.com/gradio-app/gradio/issues/7051
     """
 
-    plotter_paths = []
-    for block in demo.blocks.values():
-        if isinstance(block, PyvistaPlotter):
-            plotter_paths.extend(block.allowed_paths or [])
-
-    # Merge with any user-provided allowed_paths
-    user_paths = kwargs.get("allowed_paths", [])
-    kwargs["allowed_paths"] = list(set(user_paths + plotter_paths))
     kwargs["prevent_thread_lock"] = True
-
     demo.launch(**kwargs)
 
     try:
