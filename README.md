@@ -1,4 +1,4 @@
-# trame-gradio-component
+# gradio-pyvistaplotter: Interactive 3D viewer for gradio applications 
 
 A [Gradio](https://www.gradio.app/) custom component that embeds an interactive [PyVista](https://pyvista.org/) plotter in any Gradio app.
 
@@ -31,9 +31,9 @@ A more complete example with a mesh loader is available in `gradio_pyvistaplotte
 
 ## Known Issues
 
-### Linux – Ctrl+C does not stop the application
+### (Linux only) Ctrl+C does not stop the application
 
-When using `PyvistaPlotter` with the standard `gr.Blocks.launch()` method, the application cannot be interrupted from the terminal via `Ctrl+C`. As a workaround, this package provides a custom `launch()` function that wraps `gr.Blocks.launch()` with proper signal handling:
+When using `PyvistaPlotter` with the standard `gr.Blocks.launch()` method from `gradio`, the application cannot be interrupted from the terminal via `Ctrl+C`. As a workaround, this package provides a custom `launch()` function that wraps `gr.Blocks.launch()` with proper signal handling:
 
 ```python
 import pyvista as pv
