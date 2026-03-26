@@ -1,4 +1,4 @@
-# gradio-pyvistaplotter: Interactive 3D viewer for gradio applications 
+# gradio-pyvistaplotter: Interactive 3D viewer for gradio applications
 
 A [Gradio](https://www.gradio.app/) custom component that embeds an interactive [PyVista](https://pyvista.org/) plotter in any Gradio app.
 
