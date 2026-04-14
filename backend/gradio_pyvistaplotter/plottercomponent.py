@@ -17,7 +17,7 @@ import pyvista as pv
 pv.OFF_SCREEN = True
 
 logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.DEBUG, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
+logging.basicConfig(level=logging.DEBUG, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s", force=True)
 
 
 class PyvistaPlotter(gr.HTML):
